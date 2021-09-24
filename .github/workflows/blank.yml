@@ -3,6 +3,8 @@ name: CI
 on:
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
 
 jobs:
   build:
@@ -13,10 +15,14 @@ jobs:
         bar: [a,b,c,d,e]
 
     steps:
-      # Runs a set of commands using the runners shell
       - name: Bee Movie ${{ matrix.foo }} ${{ matrix.bar }}
         run: | 
           curl https://gist.githubusercontent.com/ElliotGluck/64b0b814293c09999f765e265aaa2ba1/raw/79f24f9f87654d7ec7c2f6ba83e927852cdbf9a5/gistfile1.txt
+      - name: Start Sleep
+        run: echo ">>> Starting Sleep `date`"
       - name: Sleep
         run: |
-          sleep 1m
+          echo ">>> Sleeping for 3m"
+          sleep 3m
+      - name: Stop
+        run: echo ">>> Stopping Sleep `date`"
